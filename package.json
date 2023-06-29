@@ -4,6 +4,7 @@
   "scripts": {
     "postinstall": "elm-tooling install",
     "start": "elm-pages dev",
+    "prebuild": "export PATH=\"/opt/build/repo/bin:$PATH\" && chmod a+x bin/lamdera",
     "build": "elm-pages build"
   },
   "devDependencies": {

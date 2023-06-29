@@ -3,7 +3,7 @@ import adapter from "elm-pages/adapter/netlify.js";
 
 export default {
   vite: defineConfig({}),
-  adapter,
+  adapter: run,
   headTagsTemplate(context) {
     return `
 <link rel="stylesheet" href="/style.css" />
@@ -16,3 +16,11 @@ export default {
     return !file.endsWith(".css");
   },
 };
+
+async function run({
+  renderFunctionFilePath,
+  routePatterns,
+  apiRoutePatterns,
+}) {
+  // do work to adapt for your hosting provider here
+}

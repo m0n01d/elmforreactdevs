@@ -4,7 +4,6 @@
   "scripts": {
     "postinstall": "elm-tooling install",
     "start": "elm-pages dev",
-    "prebuild": "mkdir bin && export PATH=\"/opt/build/repo/bin:$PATH\" && echo $PATH && curl https://static.lamdera.com/bin/linux/lamdera -o bin/lamdera && chmod a+x bin/lamdera",
     "build": "elm-pages build"
   },
   "devDependencies": {

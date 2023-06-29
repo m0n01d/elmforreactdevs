@@ -4,3 +4,4 @@ dist/
 .elm-pages/
 functions/render/elm-pages-cli.js
 *.swp
+.DS_Store

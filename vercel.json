@@ -1,3 +1,3 @@
 {
-  "installCommand": "curl https://static.lamdera.com/bin/linux/lamdera -o /usr/local/bin/lamdera && chmod a+x /usr/local/bin/lamdera && npm install"
+  "installCommand": "curl https://static.lamdera.com/bin/linux/lamdera-1.1.0-linux-x86_64 -o /usr/local/bin/lamdera && chmod a+x /usr/local/bin/lamdera && npm install"
 }

@@ -5,7 +5,8 @@
     "postinstall": "elm-tooling install",
     "start": "elm-pages dev",
     "prebuild": "export PATH=\"/bin:$PATH\"",
-    "build": "elm-pages build"
+    "xbuild": "elm-pages build",
+    "build": "npx elm-pages gen && cd elm-stuff/elm-pages/ && lamdera make .elm-pages/Main.elm --output /dev/null"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",

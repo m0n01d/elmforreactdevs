@@ -5758,7 +5758,7 @@
                         ]), _List_fromArray([
                             $elm$html$Html$img_fn(_List_fromArray([
                                 $elm$html$Html$Attributes$stringProperty_fn($elm$html$Html$Attributes$class_a0, "block mx-auto my-12"),
-                                $elm$html$Html$Attributes$src("/public/384.jpeg")
+                                $elm$html$Html$Attributes$src("/384.jpeg")
                             ]), _List_Nil),
                             $elm$html$Html$caption_fn(_List_fromArray([
                                 $elm$html$Html$Attributes$stringProperty_fn($elm$html$Html$Attributes$class_a0, "block text-center")
@@ -5829,7 +5829,7 @@
                         ]), _List_fromArray([
                             $elm$html$Html$img_fn(_List_fromArray([
                                 $elm$html$Html$Attributes$stringProperty_fn($elm$html$Html$Attributes$class_a0, "block mx-auto md:w-72"),
-                                $elm$html$Html$Attributes$src("/public/me/teaching.jpg"),
+                                $elm$html$Html$Attributes$src("/me/teaching.jpg"),
                                 $elm$html$Html$Attributes$stringProperty_fn($elm$html$Html$Attributes$alt_a0, "teaching react")
                             ]), _List_Nil),
                             $elm$html$Html$caption_fn(_List_fromArray([

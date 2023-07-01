@@ -4,8 +4,7 @@
   "scripts": {
     "postinstall": "elm-tooling install",
     "start": "elm-pages dev",
-    "prebuild": "export PATH=\"/bin:$PATH\"",
-    "build": "elm-pages build"
+    "xbuild": "elm-pages build"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",

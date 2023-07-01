@@ -1,5 +1,5 @@
 {
-  "installCommand": "export PATH=\"/bin:$PATH\" && curl https://static.lamdera.com/bin/linux/lamdera-1.1.0-linux-arm64 -o /usr/local/bin/lamdera && chmod a+x /usr/local/bin/lamdera ",
-  "buildCommand": "export ELM_HOME=\"./elm-pages/cache/elm\" && npm install && npm run build",
+  "_installCommand": "export PATH=\"/bin:$PATH\" && curl https://static.lamdera.com/bin/linux/lamdera-1.1.0-linux-arm64 -o /usr/local/bin/lamdera && chmod a+x /usr/local/bin/lamdera && npm install",
+  "_buildCommand": "export ELM_HOME=\"./elm-pages/cache/elm\"  && npm run build",
   "outputDirectory": "dist"
 }

@@ -154,7 +154,7 @@ view app shared =
                     ]
                     [ Html.img
                         [ Attributes.class "block mx-auto md:w-72"
-                        , Attributes.src "/me/teaching.jpg"
+                        , Attributes.src "/me/teaching.JPG"
                         , Attributes.alt "teaching react"
                         ]
                         []

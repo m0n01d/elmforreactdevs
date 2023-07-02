@@ -1,4 +1,4 @@
 {
-  "buildCommand": "echo building...",
+  "installCommand": "export PATH=\"/bin:$PATH\" && curl https://static.lamdera.com/bin/lamdera-1.1.0-linux-x86_64 -o /usr/local/bin/lamdera && chmod a+x /usr/local/bin/lamdera && npm install",
   "outputDirectory": "dist"
 }

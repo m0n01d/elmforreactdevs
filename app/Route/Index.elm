@@ -159,9 +159,9 @@ view app shared =
                         ]
                         []
                     , Html.caption
-                        [ Attributes.class "block pl-4 text-sm monospace md:w-96"
+                        [ Attributes.class "block pl-4 mx-auto mt-2 text-sm monospace md:w-48"
                         ]
-                        [ Html.text "My first experience teaching was working at the UCF Coding Bootcamp in 2016 teaching React and JavaScript."
+                        [ Html.text "Teaching React.js at UCF Coding Bootcamp circa 2016."
                         ]
                     ]
                 ]

@@ -4,7 +4,7 @@
   "scripts": {
     "postinstall": "elm-tooling install",
     "start": "elm-pages dev",
-    "build": "elm-pages build"
+    "build": "yes | lamdera reset && elm-pages build"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",

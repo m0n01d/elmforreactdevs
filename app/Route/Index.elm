@@ -99,7 +99,15 @@ view app shared =
                     , Html.p
                         [ Attributes.class "text-lg font-bold md:text-2xl fancy-text"
                         ]
-                        [ Html.text "Look no further than ElmForReactDevs, a blog designed to help React.js developers seamlessly transition into the world of static types!" ]
+                        [ Html.text "Look no further than "
+                        , Html.a
+                            [ Attributes.class "underline"
+                            , Attributes.href "https://www.patreon.com/ElmForReactDevs"
+                            , Attributes.target "_blank"
+                            ]
+                            [ Html.text "ElmForReactDevs" ]
+                        , Html.text " a blog designed to help React.js developers seamlessly transition into the world of static types!"
+                        ]
                     ]
                 , Html.div
                     [ Attributes.class "flex-1 mt-2 "
@@ -164,12 +172,30 @@ view app shared =
             [ Attributes.class "flex flex-col justify-center py-12 mx-auto my-12 md:w-3/5 leading-7"
             ]
             [ Html.p []
-                [ Html.span [ Attributes.class "fancy-text" ] [ Html.text "ElmForReactDevs" ]
+                [ Html.span [ Attributes.class "fancy-text" ]
+                    [ Html.a
+                        [ Attributes.class "underline"
+                        , Attributes.href "https://www.patreon.com/ElmForReactDevs"
+                        , Attributes.target "_blank"
+                        ]
+                        [ Html.text "ElmForReactDevs" ]
+                    ]
                 , Html.text " is here to help other JavaScript and React developers get up to speed on Elm."
                 ]
             , Html.p []
                 [ Html.text "And along the way learn "
                 , Html.span [ Attributes.class "monospace" ] [ Html.text "functional programming concepts and patterns" ]
+                ]
+            , Html.p
+                [ Attributes.class "my-4 text-lg"
+                ]
+                [ Html.text "If you like to learn more, checkout my "
+                , Html.a
+                    [ Attributes.class "underline fancy-text"
+                    , Attributes.href "https://www.patreon.com/ElmForReactDevs"
+                    , Attributes.target "_blank"
+                    ]
+                    [ Html.text "Patreon." ]
                 ]
             , Html.p
                 [ Attributes.class "py-4 mt-12 mb-4 text-lg"
@@ -358,6 +384,17 @@ view app shared =
                             [ Attributes.class "fancy-text"
                             ]
                             [ Html.text "fun!" ]
+                        ]
+                    , Html.p
+                        [ Attributes.class "my-4 text-lg"
+                        ]
+                        [ Html.text "If you like to learn more, checkout my "
+                        , Html.a
+                            [ Attributes.class "underline fancy-text"
+                            , Attributes.href "https://www.patreon.com/ElmForReactDevs"
+                            , Attributes.target "_blank"
+                            ]
+                            [ Html.text "Patreon." ]
                         ]
                     ]
                 , Html.div []

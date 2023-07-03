@@ -388,13 +388,24 @@ view app shared =
                     , Html.p
                         [ Attributes.class "my-4 text-lg"
                         ]
-                        [ Html.text "If you like to learn more, checkout my "
+                        [ Html.text "You can help support the project by becoming a "
                         , Html.a
                             [ Attributes.class "underline fancy-text"
                             , Attributes.href "https://www.patreon.com/ElmForReactDevs"
                             , Attributes.target "_blank"
                             ]
-                            [ Html.text "Patreon." ]
+                            [ Html.text "Patron." ]
+                        ]
+                    , Html.p
+                        [ Attributes.class "my-4 text-lg"
+                        ]
+                        [ Html.text "As well as by subscribing on "
+                        , Html.a
+                            [ Attributes.class "underline fancy-text"
+                            , Attributes.href "https://www.youtube.com/@ElmForReactDevs"
+                            , Attributes.target "_blank"
+                            ]
+                            [ Html.text "YouTube." ]
                         ]
                     ]
                 , Html.div []

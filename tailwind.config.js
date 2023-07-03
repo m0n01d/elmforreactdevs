@@ -6,11 +6,14 @@ export default {
     "./src/**/*.{elm,js,ts,jsx,tsx}",
     "./app/Route/**/*.elm",
   ],
-  safelist: [
-    {
-      pattern: /./, // the "." means "everything"
-    },
-  ],
+  safelist:
+    typeof process.env.VERCEL_ENV == "undefined"
+      ? [
+          {
+            pattern: /./, // the "." means "everything"
+          },
+        ]
+      : [],
   theme: {
     extend: {},
   },

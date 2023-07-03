@@ -87,10 +87,10 @@ view app shared =
                 [ Attributes.class "fancy-text" ]
                 [ Html.text "Welcome to ElmForReactDevs" ]
             , Html.div
-                [ Attributes.class "flex flex-col mt-16 md:flex-row"
+                [ Attributes.class "flex flex-col items-center mt-16 md:flex-row"
                 ]
                 [ Html.div
-                    [ Attributes.class "flex-1"
+                    [ Attributes.class "flex-1 px-6 md:px-12"
                     ]
                     [ Html.h2
                         [ Attributes.class "my-8 text-xl font-bold md:text-3xl fancy-text"
@@ -102,28 +102,42 @@ view app shared =
                         [ Html.text "Look no further than ElmForReactDevs, a blog designed to help React.js developers seamlessly transition into the world of static types!" ]
                     ]
                 , Html.div
-                    [ Attributes.class "flex-1"
+                    [ Attributes.class "flex-1 mt-2 "
                     ]
-                    [ Html.img
-                        [ Attributes.class "block mx-auto my-12"
-                        , Attributes.src "/384.jpeg"
+                    [ Html.iframe
+                        [ Attributes.class "w-full aspect-video"
+                        , Attributes.src "https://www.youtube.com/embed/3GBZVR7TFU4"
+                        , Attributes.title "ElmForReactDevs YouTube"
+                        , Attributes.attribute "frameborder" "0"
+                        , Attributes.attribute "allow" "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        , Attributes.attribute "allowfullscreen" ""
                         ]
                         []
                     , Html.caption
-                        [ Attributes.class "block text-center"
+                        [ Attributes.class "block mt-2 text-center"
                         ]
-                        [ Html.text "Pretend thats ^ a video" ]
+                        [ Html.text "Hello World!" ]
                     ]
                 ]
             ]
         , Html.section
             [ Attributes.class "my-8 leading-7"
             ]
-            [ Html.p [] [ Html.text "Starting in 2017, I experienced first hand the journey of switching from React development to ", Html.span [ Attributes.class "monospace" ] [ Html.text "Elm fulltime." ] ]
-            , Html.p [] [ Html.text "And it ", Html.span [ Attributes.class "fancy-text " ] [ Html.text "completely changed" ], Html.text " the way I think about programming." ]
+            [ Html.p []
+                [ Html.text "Starting in 2017, I experienced first hand the journey of switching from React development to "
+                , Html.span
+                    [ Attributes.class "monospace"
+                    ]
+                    [ Html.text "Elm fulltime." ]
+                ]
+            , Html.p []
+                [ Html.text "And it "
+                , Html.span [ Attributes.class "fancy-text " ] [ Html.text "completely changed" ]
+                , Html.text " the way I think about programming."
+                ]
             ]
         , Html.section
-            [ Attributes.class "flex flex-col justify-center my-12 md:w-1/2 leading-7"
+            [ Attributes.class "flex flex-col justify-center py-8 my-12 md:w-1/2 leading-7"
             ]
             [ Html.div []
                 [ Html.p []
@@ -132,7 +146,8 @@ view app shared =
                 , Html.p
                     [ Attributes.class "my-2"
                     ]
-                    [ Html.text "I want to help more React developers better understand elm and static typed purely functional languages." ]
+                    [ Html.text "I want to help more React developers better understand elm and static typed purely functional languages."
+                    ]
                 , Html.p []
                     [ Html.text "I saw "
                     , Html.span
@@ -145,29 +160,8 @@ view app shared =
                 , Html.p [] [ Html.text "Those of which I hope to cover here in a series of articles and videos." ]
                 ]
             ]
-        , Html.section []
-            [ Html.div
-                [ Attributes.class "flex flex-col items-center justify-around mb-8 md:flex-row"
-                ]
-                [ Html.div
-                    [ Attributes.class "my-8"
-                    ]
-                    [ Html.img
-                        [ Attributes.class "block mx-auto md:w-72"
-                        , Attributes.src "/me/teaching.JPG"
-                        , Attributes.alt "teaching react"
-                        ]
-                        []
-                    , Html.caption
-                        [ Attributes.class "block pl-4 mx-auto mt-2 text-sm monospace md:w-48"
-                        ]
-                        [ Html.text "Teaching React.js at UCF Coding Bootcamp circa 2016."
-                        ]
-                    ]
-                ]
-            ]
         , Html.section
-            [ Attributes.class "flex flex-col justify-center mx-auto my-12 md:w-3/5 leading-7"
+            [ Attributes.class "flex flex-col justify-center py-12 mx-auto my-12 md:w-3/5 leading-7"
             ]
             [ Html.p []
                 [ Html.span [ Attributes.class "fancy-text" ] [ Html.text "ElmForReactDevs" ]
@@ -178,7 +172,7 @@ view app shared =
                 , Html.span [ Attributes.class "monospace" ] [ Html.text "functional programming concepts and patterns" ]
                 ]
             , Html.p
-                [ Attributes.class "mt-12 mb-4 text-lg"
+                [ Attributes.class "py-4 mt-12 mb-4 text-lg"
                 ]
                 [ Html.text "In my experience, there are "
                 , Html.span
@@ -187,7 +181,7 @@ view app shared =
                     [ Html.text "3 pillars to Elm mastery:" ]
                 ]
             , Html.ul
-                [ Attributes.class "list-decimal "
+                [ Attributes.class "pt-2 pb-8 list-decimal "
                 ]
                 [ Html.li
                     [ Attributes.class "mb-4"
@@ -225,12 +219,18 @@ view app shared =
                     , Html.text "Reading compiler errors, walking through refactors."
                     ]
                 ]
-            , Html.hr [ Attributes.class "my-4" ] []
-            , Html.p [] [ Html.text "Here I will share the tools and techniques I've acquired over the years working with Elm at various startups across industries from HealthTech saving lives to music and live streaming, and more." ]
+            , Html.hr
+                [ Attributes.class "py-6 my-4"
+                ]
+                []
+            , Html.p
+                [ Attributes.class "mb-2"
+                ]
+                [ Html.text "Here I will share the tools and techniques I've acquired over the years working with Elm at various startups across industries from HealthTech saving lives to music and live streaming, and more." ]
             , Html.p [] [ Html.text "Hopefully this content helps you start to think in Elm and you can begin to use it in your personal and professional lives" ]
             ]
         , Html.section
-            [ Attributes.class "my-8 md:w-4/5 leading-7"
+            [ Attributes.class "py-12 my-8 md:w-4/5 leading-7"
             ]
             [ Html.div
                 [ Attributes.class "flex flex-col items-center my-12 md:flex-row"
@@ -262,7 +262,7 @@ view app shared =
                 [ Html.text "Thankfully it's a rather small language and you can learn the basics quickly and build robust applications with a handful of patterns" ]
             ]
         , Html.section
-            [ Attributes.class "flex flex-col justify-center my-8"
+            [ Attributes.class "flex flex-col justify-center py-12 my-8"
             , Attributes.style "min-height" "50vh"
             ]
             [ Html.p
@@ -302,7 +302,7 @@ view app shared =
                 ]
                 [ Html.text "\"How does ajax and fetch() work in Elm?\"" ]
             ]
-        , Html.section [ Attributes.class "mx-auto mb-24 md:w-3/5" ]
+        , Html.section [ Attributes.class "mx-auto my-12 mb-24 md:w-3/5" ]
             [ Html.p [] [ Html.text "Elm is very idiomatic and pattern heavy." ]
             , Html.p [] [ Html.text "So once you learn some of these patterns and practices you'll be well on your way to being effective." ]
             , Html.p [] [ Html.text "I'm here to help you ", Html.span [ Attributes.class "italic" ] [ Html.text "bridge the gap." ] ]
@@ -310,6 +310,71 @@ view app shared =
             , Html.p []
                 [ Html.small []
                     [ Html.text "I'm not saying \"Elm will make you a better programmer\", but I'm not not saying it either. ;)"
+                    ]
+                ]
+            ]
+        , Html.section
+            [ Attributes.class "my-12"
+            ]
+            [ Html.div
+                [ Attributes.class "flex flex-col items-center justify-around mb-8 md:flex-row"
+                ]
+                [ Html.div
+                    [ Attributes.class "my-8"
+                    ]
+                    [ Html.img
+                        [ Attributes.class "block mx-auto md:w-72"
+                        , Attributes.src "/me/teaching.JPG"
+                        , Attributes.alt "teaching react"
+                        ]
+                        []
+                    , Html.caption
+                        [ Attributes.class "block mx-auto mt-2 text-sm monospace md:w-48"
+                        ]
+                        [ Html.text "Teaching React.js at UCF Coding Bootcamp circa 2016."
+                        ]
+                    ]
+                , Html.div
+                    [ Attributes.class "my-8 md:w-1/3 leading-6"
+                    ]
+                    [ Html.p [] [ Html.text "Hi I'm Dwight" ]
+                    , Html.p []
+                        [ Html.text "Elm and functional programming "
+                        , Html.span
+                            [ Attributes.class "fancy-text"
+                            ]
+                            [ Html.text "changed my life." ]
+                        ]
+                    , Html.p
+                        [ Attributes.class "my-1"
+                        ]
+                        [ Html.text "I've been making web applications for nearly a decade, and Elm makes the process of building robust and reliable applications easier." ]
+                    , Html.p [] [ Html.text "It's been my pleasure to work with such a friendly language, and to learn from many talented people across different industries." ]
+                    , Html.p
+                        [ Attributes.class "block mt-2 monospace"
+                        ]
+                        [ Html.text "Functional programming is "
+                        , Html.span
+                            [ Attributes.class "fancy-text"
+                            ]
+                            [ Html.text "fun!" ]
+                        ]
+                    ]
+                , Html.div []
+                    [ Html.img
+                        [ Attributes.class "block w-full mx-auto md:w-64"
+                        , Attributes.src "/me/profile.jpg"
+                        ]
+                        []
+                    , Html.p
+                        [ Attributes.class "block mx-auto mt-2 text-sm monospace md:w-52"
+                        ]
+                        [ Html.text "I'd love to help you on your "
+                        , Html.span
+                            [ Attributes.class "fancy-text"
+                            ]
+                            [ Html.text "functional journey!" ]
+                        ]
                     ]
                 ]
             ]

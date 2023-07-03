@@ -59,16 +59,16 @@ head :
 head app =
     Seo.summary
         { canonicalUrlOverride = Nothing
-        , siteName = "elm-pages"
+        , siteName = "ElmForReactDevs"
         , image =
             { url = [ "images", "icon-png.png" ] |> UrlPath.join |> Pages.Url.fromPath
             , alt = "elm-pages logo"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "Welcome to elm-pages!"
+        , description = "Welcome to ElmForReactDevs!"
         , locale = Nothing
-        , title = "elm-pages is running"
+        , title = "Functional Programing training for JS devs"
         }
         |> Seo.website
 

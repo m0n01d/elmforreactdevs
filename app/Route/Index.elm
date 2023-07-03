@@ -68,7 +68,7 @@ head app =
             }
         , description = "Welcome to ElmForReactDevs!"
         , locale = Nothing
-        , title = "Functional Programing training for JS devs"
+        , title = "Functional Programming training for JS devs"
         }
         |> Seo.website
 

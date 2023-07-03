@@ -1,1 +1,0 @@
-[{"kind":"prerender","pathPattern":"/blog/:slug"},{"kind":"serverless","pathPattern":"/greet"},{"kind":"serverless","pathPattern":"/hello"},{"kind":"static","pathPattern":"/"}]

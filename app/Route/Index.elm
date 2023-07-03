@@ -187,7 +187,7 @@ view app shared =
                 , Html.span [ Attributes.class "monospace" ] [ Html.text "functional programming concepts and patterns" ]
                 ]
             , Html.p
-                [ Attributes.class "my-4 text-lg"
+                [ Attributes.class "my-2 text-lg"
                 ]
                 [ Html.text "If you like to learn more, checkout my "
                 , Html.a
@@ -198,7 +198,18 @@ view app shared =
                     [ Html.text "Patreon." ]
                 ]
             , Html.p
-                [ Attributes.class "py-4 mt-12 mb-4 text-lg"
+                [ Attributes.class "my-2 text-lg"
+                ]
+                [ Html.text "As well as by subscribing on "
+                , Html.a
+                    [ Attributes.class "underline fancy-text"
+                    , Attributes.href "https://www.youtube.com/@ElmForReactDevs"
+                    , Attributes.target "_blank"
+                    ]
+                    [ Html.text "YouTube." ]
+                ]
+            , Html.p
+                [ Attributes.class "py-4 mt-12 mb-4 text-xl"
                 ]
                 [ Html.text "In my experience, there are "
                 , Html.span

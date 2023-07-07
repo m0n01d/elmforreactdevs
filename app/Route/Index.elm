@@ -100,13 +100,8 @@ view app shared =
                         [ Attributes.class "text-lg font-bold md:text-2xl fancy-text"
                         ]
                         [ Html.text "Look no further than "
-                        , Html.a
-                            [ Attributes.class "underline"
-                            , Attributes.href "https://www.patreon.com/ElmForReactDevs"
-                            , Attributes.target "_blank"
-                            ]
-                            [ Html.text "ElmForReactDevs" ]
-                        , Html.text " a blog designed to help React.js developers seamlessly transition into the world of static types!"
+                        , viewPatreonLink (Just "ElmForReactDevs")
+                        , Html.text " a series designed to help React.js developers seamlessly transition into the world of static types!"
                         ]
                     ]
                 , Html.div
@@ -174,7 +169,7 @@ view app shared =
             [ Html.p []
                 [ Html.span [ Attributes.class "fancy-text" ]
                     [ Html.a
-                        [ Attributes.class "underline"
+                        [ Attributes.class "text-lg underline"
                         , Attributes.href "https://www.patreon.com/ElmForReactDevs"
                         , Attributes.target "_blank"
                         ]
@@ -190,23 +185,24 @@ view app shared =
                 [ Attributes.class "my-2 text-lg"
                 ]
                 [ Html.text "If you like to learn more, checkout my "
-                , Html.a
-                    [ Attributes.class "underline fancy-text"
-                    , Attributes.href "https://www.patreon.com/ElmForReactDevs"
-                    , Attributes.target "_blank"
-                    ]
-                    [ Html.text "Patreon." ]
+                , viewPatreonLink Nothing
                 ]
             , Html.p
                 [ Attributes.class "my-2 text-lg"
                 ]
-                [ Html.text "As well as by subscribing on "
+                [ Html.text "You can help support the project by subscribing to the"
                 , Html.a
-                    [ Attributes.class "underline fancy-text"
+                    [ Attributes.class "inline-flex items-center underline fancy-text"
                     , Attributes.href "https://www.youtube.com/@ElmForReactDevs"
                     , Attributes.target "_blank"
                     ]
-                    [ Html.text "YouTube." ]
+                    [ Html.img
+                        [ Attributes.class "inline-block w-4 mx-1"
+                        , Attributes.src "youtube.png"
+                        ]
+                        []
+                    , Html.text "YouTube Channel."
+                    ]
                 ]
             , Html.p
                 [ Attributes.class "py-4 mt-12 mb-4 text-xl"
@@ -439,3 +435,20 @@ view app shared =
             ]
         ]
     }
+
+
+viewPatreonLink maybeText =
+    Html.a
+        [ Attributes.class "inline-flex items-center underline fancy-text"
+        , Attributes.href "https://www.patreon.com/ElmForReactDevs"
+        , Attributes.target "_blank"
+        ]
+        [ Html.img
+            [ Attributes.class "inline-block w-4 ml-1 mr-2"
+            , Attributes.src "patreon.png"
+            ]
+            []
+        , maybeText
+            |> Maybe.withDefault "Patreon."
+            |> Html.text
+        ]

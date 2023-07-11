@@ -1,10 +1,16 @@
 module Route.Blog.Slug_ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
+import BackendTask.File
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
-import Html
+import Html exposing (Html)
+import Json.Decode as Decode exposing (Decoder)
+import Json.Decode.Extra as Decode
+import Markdown.Block
+import Markdown.Parser
+import Markdown.Renderer
 import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
@@ -38,11 +44,19 @@ pages : BackendTask FatalError (List RouteParams)
 pages =
     BackendTask.succeed
         [ { slug = "hello" }
+        , { slug = "understanding_map" }
         ]
 
 
 type alias Data =
-    { something : String
+    { post : BlogPostMetadata
+    }
+
+
+type alias BlogPostMetadata =
+    { body : List Markdown.Block.Block
+    , title : String
+    , tags : List String
     }
 
 
@@ -50,10 +64,21 @@ type alias ActionData =
     {}
 
 
-data : RouteParams -> BackendTask FatalError Data
+data : { a | slug : String } -> BackendTask FatalError Data
 data routeParams =
-    BackendTask.map Data
-        (BackendTask.succeed "Hi")
+    [ "./posts", "/", routeParams.slug, ".md" ]
+        |> String.concat
+        |> blogPost
+        |> BackendTask.allowFatal
+        |> BackendTask.map Data
+
+
+
+--blogPost : BackendTask FatalError BlogPostMetadata
+
+
+blogPost =
+    BackendTask.File.bodyWithFrontmatter blogPostDecoder
 
 
 head :
@@ -62,14 +87,14 @@ head :
 head app =
     Seo.summary
         { canonicalUrlOverride = Nothing
-        , siteName = "elm-pages"
+        , siteName = "ElmForReactDevs"
         , image =
             { url = Pages.Url.external "TODO"
-            , alt = "elm-pages logo"
+            , alt = "ElmForReactDevs logo"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "TODO"
+        , description = "ElmForReactDevs blog post"
         , locale = Nothing
         , title = "TODO title" -- metadata.title -- TODO
         }
@@ -82,5 +107,42 @@ view :
     -> View (PagesMsg Msg)
 view app sharedModel =
     { title = "Placeholder - Blog.Slug_"
-    , body = [ Html.text "You're on the page Blog.Slug_" ]
+    , body =
+        renderMd app.data.post.body
+            |> Result.withDefault [ Html.text "bad" ]
     }
+
+
+renderMd : List Markdown.Block.Block -> Result String (List (Html msg))
+renderMd =
+    \blocks ->
+        Markdown.Renderer.render
+            Markdown.Renderer.defaultHtmlRenderer
+            blocks
+
+
+markdownToView : String -> Decoder (List Markdown.Block.Block)
+markdownToView markdownString =
+    markdownString
+        |> Markdown.Parser.parse
+        |> Result.mapError (\_ -> "Markdown error.")
+        |> Decode.fromResult
+
+
+blogPostDecoder =
+    \mdString ->
+        Decode.map2
+            (\title renderedMd ->
+                { body = renderedMd
+                , tags = []
+                , title = title
+                }
+            )
+            (Decode.field "title" Decode.string)
+            (mdString |> markdownToView)
+
+
+tagsDecoder : Decoder (List String)
+tagsDecoder =
+    Decode.map (String.split " ")
+        Decode.string

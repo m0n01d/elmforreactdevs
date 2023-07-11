@@ -64,7 +64,7 @@ data routeParams request =
         Nothing ->
             BackendTask.succeed
                 (Response.render
-                    { name = Nothing }
+                    { name = Just "something" }
                 )
 
 

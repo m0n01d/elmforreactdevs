@@ -66,7 +66,7 @@ head app =
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "Welcome to ElmForReactDevs!"
+        , description = "Teaching Elm for React devs"
         , locale = Nothing
         , title = "Functional Programming training for JS devs"
         }

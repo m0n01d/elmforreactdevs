@@ -43,8 +43,7 @@ route =
 pages : BackendTask FatalError (List RouteParams)
 pages =
     BackendTask.succeed
-        [ { slug = "hello" }
-        , { slug = "understanding_map" }
+        [ { slug = "understanding_map" }
         ]
 
 

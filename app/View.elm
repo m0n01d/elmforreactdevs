@@ -1,15 +1,15 @@
 module View exposing (View, map)
 
+import Html exposing (Html)
+import Html.Attributes as Attributes
+import Route
+
+
 {-|
 
 @docs View, map
 
 -}
-
-import Html exposing (Html)
-
-
-{-| -}
 type alias View msg =
     { title : String
     , body : List (Html msg)
@@ -20,5 +20,19 @@ type alias View msg =
 map : (msg1 -> msg2) -> View msg1 -> View msg2
 map fn doc =
     { title = doc.title
-    , body = List.map (Html.map fn) doc.body
+    , body = viewHeader :: List.map (Html.map fn) doc.body
     }
+
+
+viewHeader =
+    Html.header
+        [ Attributes.class "flex items-center px-4 pb-2 mb-4 monospace shadow-sm md:pb-6 "
+        ]
+        [ Route.Index
+            |> Route.link
+                [ Attributes.class "mr-auto"
+                ]
+                [ Html.text "Home" ]
+        , Route.Blog
+            |> Route.link [] [ Html.text "Blog" ]
+        ]

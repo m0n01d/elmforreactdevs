@@ -6,6 +6,7 @@ import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
+import Html.Attributes as Attributes
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Extra as Decode
 import Markdown.Block
@@ -105,10 +106,12 @@ view :
     -> Shared.Model
     -> View (PagesMsg Msg)
 view app sharedModel =
-    { title = "Placeholder - Blog.Slug_"
+    { title = app.data.post.title
     , body =
         renderMd app.data.post.body
             |> Result.withDefault [ Html.text "bad" ]
+            |> Html.div [ Attributes.attribute "view-name" "Blog.view" ]
+            |> List.singleton
     }
 
 

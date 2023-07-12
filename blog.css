@@ -1,0 +1,15 @@
+[view-name="Blog.view"] {
+  @apply leading-7;
+}
+
+[view-name="Blog.view"] p {
+  @apply my-2;
+}
+[view-name="Blog.view"] h1 {
+  @apply text-2xl font-bold fancy-text;
+}
+
+[view-name="Blog.view"] code,
+[view-name="Blog.view"] pre {
+  @apply bg-neutral-50 monospace py-2 px-3;
+}

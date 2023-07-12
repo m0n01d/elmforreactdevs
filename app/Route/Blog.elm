@@ -17,6 +17,7 @@ import RouteBuilder exposing (App, StatelessRoute)
 import Server.Request exposing (Request)
 import Server.Response
 import Shared
+import String.Extra as String
 import UrlPath exposing (UrlPath)
 import View exposing (View)
 
@@ -115,7 +116,7 @@ viewBlogPost post =
         [ Route.Blog__Slug_ { slug = String.replace ".md" "" post }
             |> Route.link []
                 [ Html.text
-                    post
+                    (String.toTitleCase <| String.replace ".md" "" <| String.replace "_" " " post)
                 ]
         ]
 

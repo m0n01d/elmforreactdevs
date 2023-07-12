@@ -27,7 +27,8 @@ So where does this confusion come from?
 
 It comes from the official react docs and google searches for articles and tutorials like this one.
 
-https://www.freecodecamp.org/news/array-map-tutorial/
+[FreeCodeCamp JavaScript Array.map() Tutorial ](https://www.freecodecamp.org/news/array-map-tutorial/)
+
 > Array.prototype.map() is a built-in array method for iterating through the elements inside an array collection in JavaScript. Think of looping as a way to progress from one element to another in a list, while still maintaining the order and position of each element.
 
 Ill say it again.
@@ -62,7 +63,7 @@ The starter example in the official react docs, Thinking in React 2023, has a co
 I see this pattern a lot.
 Initialize an empty array, loop over another array, pushing items from it into the empty one.
 
-```
+```elm
 function ProductTable({ products, filterText, inStockOnly }) {
   const rows = [];
   let lastCategory = null;
@@ -72,7 +73,7 @@ function ProductTable({ products, filterText, inStockOnly }) {
     rows.push(
         <ProductCategoryRow
           category={product.category}
-          key={product.category} />
+          key={product.category}/>
       );
    ...
   }
@@ -114,15 +115,21 @@ Very similar phrase to mdn docs
 
 
 `map()` is not about iteration or looping, like `forEach` but rather about transformation. We have a safe way transform our data. 
+
 No `null`.
+
 No type coercion.
+
 No `undefined`.
 
 So how do we safely update our data?
 
 ```
+
 [ "help im in a box" ].map(str => str.concat("!"))
+
 outputs:[ 'help im in a box!' ]
+
 ```
 I really like the “box metaphor” I learned from Professor Frisby.
 
@@ -142,6 +149,7 @@ I want to open up the box and transform its contents. Then it goes right back in
 In Elm we use functions like  `List.map` to turn data, like a user record, into `Html`  so that it can be rendered.
 
 ```
+
 viewProfile : User -> Html msg
 viewProfile user = 
   Html.li [] [ Html.text user.name ]
@@ -157,12 +165,17 @@ But in Elm there are other types that have a `map()` function.
 
 Maybe the most common example is the `Maybe a` type.
 
+
 ```
+
 type Maybe a = Just a | Nothing
+
 ```
+
 We either have it or we don’t.
 
 Say we have our box
+
 ```
 
 x: Maybe String
@@ -180,6 +193,7 @@ nopeEmtpy = List.map (\str -> String.append "!") []
 
 [ "help im in a box" ].map(str => str.concat("!!!"))
 [ 'help im in a box!!!' ]
+
 ```
 
 But if the ox is empty, we get `Nothing` so nothing happens.
@@ -190,6 +204,7 @@ The idea is to “open” this box. Or a container, or a context, whatever you w
 Open this box safely with `map` then and run a function on its contents `a -> b` and then put it in that box.
 
 ```
+
 map : (a -> b) -> Maybe a -> Maybe b
 map fromAtoB maybeA =
   case maybeA of 
@@ -197,19 +212,22 @@ map fromAtoB maybeA =
         Nothing
       Just ourA ->
         Just <| fromAtoB ourA
+
 ```
 
 
 Now we can apply our knowledge of Maybes to rendering them in our Ui.
 Say we had a `User`
+
 ```
-Type alias User = 
+
+type alias User = 
   { maybeAge : Maybe Int  
   , name : “String”
 }
 
 
-`viewAge :Int -> Html msg
+viewAge :Int -> Html msg
 viewAge age =
   Html.text <| String.fromInt age
 
@@ -222,6 +240,7 @@ view =
 , Maybe.map viewAge cait.maybeAge -- Maybe (Html msg)
 , Html.Extra.viewMaybe viewAge caitMaybe
   ]
+
 ```
 
 
@@ -231,8 +250,13 @@ But we need a way to render `Maybe (html msg)
 
 In `Html.Extra` theres `viewMaybe (a -> Html msg) -> Maybe a -> Html msg`
 Which is super useful
-https://package.elm-lang.org/packages/elm-community/html-extra/latest/Html-Extra
+
+[Html.Extra package](https://package.elm-lang.org/packages/elm-community/html-extra/latest/Html-Extra)
+
+and the source
+
 [html-extra/src/Html/Extra.elm at 3.4.0 · elm-community/html-extra · GitHub](https://github.com/elm-community/html-extra/blob/3.4.0/src/Html/Extra.elm#L97)
+
 `user.maybeAge |> Html.viewMaybe viewAge` 
 will handle the `Nothing` case for your and render `nothing` 
 Compared to [Conditional Rendering – React](https://legacy.reactjs.org/docs/conditional-rendering.html)
@@ -251,31 +275,47 @@ So the more you can generalize your thinking, and simplify your understanding, t
 
 And then theres `Result.map` and take it and run with it
 Generalize and think of them as boxes
-https://package.elm-lang.org/packages/elm/core/latest/Task#map
-https://package.elm-lang.org/packages/elm/core/latest/Result#map
-https://package.elm-lang.org/packages/elm/core/latest/Dict#map
-https://package.elm-lang.org/packages/elm/core/latest/String#map
+
+
+[https://package.elm-lang.org/packages/elm/core/latest/Task#map](https://package.elm-lang.org/packages/elm/core/latest/Task#map)
+
+[https://package.elm-lang.org/packages/elm/core/latest/Result#map](https://package.elm-lang.org/packages/elm/core/latest/Result#map)
+
+[https://package.elm-lang.org/packages/elm/core/latest/Dict#map](https://package.elm-lang.org/packages/elm/core/latest/Dict#map)
+
+[https://package.elm-lang.org/packages/elm/core/latest/String#map](https://package.elm-lang.org/packages/elm/core/latest/String#map)
+
 And more
 
 
 But once you crack that then you have `map2` and `map3`
 Which let you combine 2 Maybes or 2 Lists
 
-Run 1 function on 2 boxes with map2 
+Run 1 function on 2 boxes with `map2`
 
 You can have 1 function that expects 2 arguments you can give it 2 boxes, and it’ll unwrap both boxes and run that function with them, and put it box 
 But we can draw it out
 
 
 
-Next is `flatMap???`
+In the next one i hope to cover the 3 Pillars of Elm Mastery:
+
+Basic syntax, The Compiler and The Elm Architecture.
 
 
 
 
-Resources :
-https://mostly-adequate.gitbook.io/mostly-adequate-guide/ch08
+
+### Resources :
+
+[Professor Frisby](https://mostly-adequate.gitbook.io/mostly-adequate-guide/ch08)
+
 [Create linear data flow with container style types (Box) | egghead.io](https://egghead.io/lessons/javascript-linear-data-flow-with-container-style-types-box)
+
 [Functors, Applicatives, And Monads In Pictures - adit.io](https://www.adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html)
-[- Beginning Elm](https://elmprogramming.com/list.html#mapping-a-list)
+
+[Beginning Elm - mapping a List](https://elmprogramming.com/list.html#mapping-a-list)
+
+
+[FreeCodeCamp JavaScript Array.map() Tutorial ](https://www.freecodecamp.org/news/array-map-tutorial/)
 

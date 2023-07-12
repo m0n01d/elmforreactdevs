@@ -1,5 +1,5 @@
 [view-name="Blog.view"] {
-  @apply leading-7;
+  @apply leading-8;
 }
 
 [view-name="Blog.view"] p {
@@ -10,6 +10,26 @@
 }
 
 [view-name="Blog.view"] code,
+[view-name="Blog.view"] blockquote,
 [view-name="Blog.view"] pre {
-  @apply bg-neutral-50 monospace py-2 px-3;
+  @apply my-2 bg-neutral-50 drop-shadow-md monospace py-2 px-3;
+}
+
+[view-name="Blog.view"] blockquote {
+  @apply border-l-2 border-fuchsia-500;
+}
+
+[view-name="Blog.view"] p code,
+[view-name="Blog.view"] p pre {
+  @apply my-px py-px;
+}
+
+[view-name="Blog.view"] a {
+  @apply shadow-sm text-sky-700;
+}
+
+[view-name="Blog.view"] p code,
+[view-name="Blog.view"] p pre,
+[view-name="Blog.view"] pre code {
+  @apply drop-shadow-none;
 }

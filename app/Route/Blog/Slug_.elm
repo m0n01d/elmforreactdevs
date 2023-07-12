@@ -16,6 +16,7 @@ import Pages.Url
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
+import UrlPath exposing (UrlPath)
 import View exposing (View)
 
 
@@ -89,14 +90,14 @@ head app =
         { canonicalUrlOverride = Nothing
         , siteName = "ElmForReactDevs"
         , image =
-            { url = Pages.Url.external "TODO"
+            { url = [ "images", "icon-png.png" ] |> UrlPath.join |> Pages.Url.fromPath
             , alt = "ElmForReactDevs logo"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "ElmForReactDevs blog post"
+        , description = [ app.data.post.title, "ElmForReactDevs" ] |> String.join " - "
         , locale = Nothing
-        , title = "TODO title" -- metadata.title -- TODO
+        , title = app.data.post.title
         }
         |> Seo.website
 

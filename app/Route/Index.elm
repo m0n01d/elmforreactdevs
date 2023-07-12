@@ -62,11 +62,11 @@ head app =
         , siteName = "ElmForReactDevs"
         , image =
             { url = [ "images", "icon-png.png" ] |> UrlPath.join |> Pages.Url.fromPath
-            , alt = "elm-pages logo"
+            , alt = "ElmForReactDevs logo"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "Teaching Elm for React devs"
+        , description = "Teaching Elm to React devs"
         , locale = Nothing
         , title = "Functional Programming training for JS devs"
         }
@@ -437,6 +437,7 @@ view app shared =
     }
 
 
+viewPatreonLink : Maybe String -> Html.Html msg
 viewPatreonLink maybeText =
     Html.a
         [ Attributes.class "inline-flex items-center underline fancy-text"

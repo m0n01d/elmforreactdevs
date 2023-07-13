@@ -201,7 +201,7 @@ nopeEmtpy = List.map (\str -> String.append "!") []
 
 ```
 
-But if the ox is empty, we get `Nothing` so nothing happens.
+But if the box is empty, we get `Nothing` so nothing happens.
 
 
 The idea is to “open” this box. Or a container, or a context, whatever you want to call it. 

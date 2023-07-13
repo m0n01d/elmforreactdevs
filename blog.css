@@ -1,6 +1,11 @@
 [view-name="Blog.view"] {
   @apply leading-8;
 }
+@media screen(md) {
+  [view-name="Blog.view"] {
+    @apply w-1/2;
+  }
+}
 
 [view-name="Blog.view"] p {
   @apply my-2;
@@ -9,10 +14,13 @@
   @apply text-2xl font-bold fancy-text;
 }
 
-[view-name="Blog.view"] code,
 [view-name="Blog.view"] blockquote,
 [view-name="Blog.view"] pre {
   @apply my-2 bg-neutral-50 drop-shadow-md monospace py-2 px-3;
+}
+
+[view-name="Blog.view"] pre {
+  @apply overflow-x-scroll;
 }
 
 [view-name="Blog.view"] blockquote {
@@ -29,7 +37,6 @@
 }
 
 [view-name="Blog.view"] p code,
-[view-name="Blog.view"] p pre,
-[view-name="Blog.view"] pre code {
-  @apply drop-shadow-none;
+[view-name="Blog.view"] p pre {
+  @apply filter-none drop-shadow-none;
 }

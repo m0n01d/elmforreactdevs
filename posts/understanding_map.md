@@ -16,9 +16,14 @@ But that’s not the whole story. We need to shift our thinking here.
 
 —-
 
-I’ve seen folks confuse `Array.prototype.map` as an almost drop in replacement to `forEach` and `forEach` is sold as an alternative to `for loops` . A more declarative approach for the imperative `for loop`
+I’ve seen folks confuse `Array.prototype.map` as an almost drop in replacement to `forEach` and `forEach` is sold as an alternative to `for loops` .
+
+A more declarative approach for the imperative `for loop`
+
 [Array.prototype.forEach() - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
-`You will rely on JavaScript features like  [for loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for)  and the  [array map() function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)  to render lists of components.`
+
+> You will rely on JavaScript features like  [for loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for)  and the  [array map() function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)  to render lists of components.`
+
 [Quick Start – React](https://react.dev/learn#rendering-lists)
 
 

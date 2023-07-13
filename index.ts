@@ -4,8 +4,6 @@ type ElmPagesInit = {
   flags: unknown;
 };
 
-var process = process || undefined;
-
 const config: ElmPagesInit = {
   load: async function (elmLoaded) {
     await elmLoaded;

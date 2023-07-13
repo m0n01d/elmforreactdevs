@@ -8,7 +8,11 @@ const config: ElmPagesInit = {
   load: async function (elmLoaded) {
     await elmLoaded;
     inject({
-      mode: typeof process.env.VERCEL_ENV != "undefined" ? "production" : "dev",
+      mode:
+        typeof process.env.VERCEL_ENV != "undefined" &&
+        typeof process.env.APP_ENV != "undefined"
+          ? "production"
+          : "dev",
     });
   },
   flags: function () {

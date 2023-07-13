@@ -7,9 +7,9 @@ type ElmPagesInit = {
 const config: ElmPagesInit = {
   load: async function (elmLoaded) {
     await elmLoaded;
+    document.body.classList.add(process.env.VERCEL_GIT_COMMIT_REF);
     inject({
-      mode:
-        process?.env?.VERCEL_GIT_COMMIT_REF == "main" ? "production" : "dev",
+      mode: process.env.VERCEL_GIT_COMMIT_REF == "main" ? "production" : "dev",
     });
   },
   flags: function () {

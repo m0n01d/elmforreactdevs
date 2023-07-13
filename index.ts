@@ -7,8 +7,9 @@ type ElmPagesInit = {
 const config: ElmPagesInit = {
   load: async function (elmLoaded) {
     await elmLoaded;
+    document.body.classList.add(process.env.VERCEL_ENV);
     inject({
-      mode: "production",
+      mode: typeof process.env.VERCEL_ENV != "undefined" ? "production" : "dev",
     });
   },
   flags: function () {

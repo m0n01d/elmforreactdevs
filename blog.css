@@ -14,6 +14,10 @@
   @apply text-2xl font-bold fancy-text;
 }
 
+[view-name="Blog.view"] code {
+  @apply text-sm bg-neutral-50 p-px;
+}
+
 [view-name="Blog.view"] blockquote,
 [view-name="Blog.view"] pre {
   @apply my-2 bg-neutral-50 drop-shadow-md monospace py-2 px-3;

@@ -9,9 +9,7 @@ const config: ElmPagesInit = {
     await elmLoaded;
     inject({
       mode:
-        typeof process?.env?.VERCEL_GIT_COMMIT_REF == "main"
-          ? "production"
-          : "dev",
+        process?.env?.VERCEL_GIT_COMMIT_REF == "main" ? "production" : "dev",
     });
   },
   flags: function () {

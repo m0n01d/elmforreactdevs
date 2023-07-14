@@ -95,9 +95,17 @@ view app shared =
 
 
 viewContent app =
-    Html.section []
-        [ Html.h2
-            [ Attributes.class "fancy-text"
+    Html.section [Attributes.class "px-4 py-3 border rounded shadow-xl md:w-5/6 "
+    ]
+
+        [Html.div [] [Html.button [Attributes.class "mr-2"
+        ] [Html.text "<"
+        ]
+        , Html.text ">"
+        , Html.span [Attributes.class "ml-2" ] [Html.text "Posts"]
+        ]
+          , Html.h2
+            [ Attributes.class "text-sm text-center fancy-text"
             ]
             [ Html.text "Posts"
             ]
@@ -106,18 +114,34 @@ viewContent app =
 
 
 viewBlogPosts posts =
-    posts
+  Html.div [Attributes.class ""
+  ] [
+    ["Name", "Date Modified", "Size", "Kind"]
+    |> List.indexedMap (\i col ->
+      Html.button [Attributes.class "flex items-center flex-1 px-3 text-left"
+      ] [Html.text col 
+      , Html.span [Attributes.classList [("hidden", i /= 1)
+      , ("ml-auto", True)]] [Html.text "^"
+      ]]
+
+      )
+    
+    |> Html.div [Attributes.class "flex items-center my-4 text-sm divide-x"]
+    , posts
         |> List.map viewBlogPost
         |> Html.div []
+        ]
 
 
 viewBlogPost post =
-    Html.div []
+    Html.div [Attributes.class "flex items-center justify-between"]
         [ Route.Blog__Slug_ { slug = String.replace ".md" "" post }
-            |> Route.link []
-                [ Html.text
-                    (String.toTitleCase <| String.replace ".md" "" <| String.replace "_" " " post)
+            |> Route.link [Attributes.class "flex-1 px-3 "]
+                [ Html.text post
                 ]
+        , Html.time [Attributes.class "flex-1 px-3 "] [Html.text "04/20/2023"]
+        , Html.span [Attributes.class "flex-1 px-3 "] [Html.text "420kb"]
+        , Html.span [Attributes.class "flex-1  px-3 "] [Html.text "Markdown Text"]
         ]
 
 

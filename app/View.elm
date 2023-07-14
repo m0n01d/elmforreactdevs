@@ -26,7 +26,7 @@ map fn doc =
 
 viewHeader =
     Html.header
-        [ Attributes.class "flex items-center px-4 pb-2 mb-4 monospace shadow-sm md:pb-6 "
+        [ Attributes.class "flex items-center px-4 py-2 mb-4 font-semibold shadow monospace md:py-6 "
         ]
         [ Route.Index
             |> Route.link

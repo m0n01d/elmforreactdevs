@@ -82,9 +82,7 @@ data =
         |> BackendTask.map
             (\files ->
                 files
-                    |> Debug.log "files"
                     |> List.filter (String.contains ".md")
-                    |> Debug.log "filtered files"
                     |> List.map
                         (\file ->
                             [ "./posts/", file ]

@@ -1,4 +1,4 @@
-import { readdir } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import * as path from "path";
 
 export async function hello(name) {
@@ -7,6 +7,7 @@ export async function hello(name) {
 
 export async function blogPosts() {
   const dir = path.join("posts");
+  const files = await readdir(dir);
 
-  return await readdir(dir);
+  return files;
 }

@@ -2,7 +2,9 @@ module Route.Blog exposing (ActionData, Data, Model, Msg, RouteParams, action, d
 
 import BackendTask exposing (BackendTask)
 import BackendTask.Custom
+import BackendTask.File
 import BackendTask.Http
+import Data.BlogPost as BlogPost exposing (BlogPost)
 import Effect exposing (Effect)
 import ErrorPage exposing (ErrorPage)
 import FatalError exposing (FatalError)
@@ -62,7 +64,7 @@ subscriptions routeParams path shared model =
 
 
 type alias Data =
-    { posts : List String
+    { posts : List BlogPost
     }
 
 
@@ -72,13 +74,31 @@ type alias ActionData =
 
 data : BackendTask FatalError Data
 data =
-    BackendTask.succeed Data
-        |> BackendTask.andMap
-            (BackendTask.Custom.run "blogPosts"
-                Encode.null
-                (Decode.list Decode.string)
-                |> BackendTask.allowFatal
+    (BackendTask.Custom.run "blogPosts"
+        Encode.null
+        (Decode.list Decode.string)
+        |> BackendTask.allowFatal
+    )
+        |> BackendTask.map
+            (\files ->
+                files
+                    |> Debug.log "files"
+                    |> List.filter (String.contains ".md")
+                    |> Debug.log "filtered files"
+                    |> List.map
+                        (\file ->
+                            [ "./posts/", file ]
+                                |> String.concat
+                                |> BackendTask.File.bodyWithFrontmatter BlogPost.decoder
+                                |> BackendTask.allowFatal
+                        )
             )
+        |> BackendTask.andThen BackendTask.combine
+        |> BackendTask.map Data
+
+
+x =
+    Decode.list (Decode.string |> Decode.andThen BlogPost.decoder)
 
 
 head : App Data ActionData RouteParams -> List Head.Tag
@@ -95,16 +115,19 @@ view app shared =
 
 
 viewContent app =
-    Html.section [Attributes.class "px-4 py-3 border rounded shadow-xl md:w-5/6 "
-    ]
-
-        [Html.div [] [Html.button [Attributes.class "mr-2"
-        ] [Html.text "<"
+    Html.section
+        [ Attributes.class "px-4 py-3 border rounded shadow-xl md:w-5/6 "
         ]
-        , Html.text ">"
-        , Html.span [Attributes.class "ml-2" ] [Html.text "Posts"]
-        ]
-          , Html.h2
+        [ Html.div []
+            [ Html.button
+                [ Attributes.class "mr-2"
+                ]
+                [ Html.text "<"
+                ]
+            , Html.text ">"
+            , Html.span [ Attributes.class "ml-2" ] [ Html.text "Posts" ]
+            ]
+        , Html.h2
             [ Attributes.class "text-sm text-center fancy-text"
             ]
             [ Html.text "Posts"
@@ -114,34 +137,42 @@ viewContent app =
 
 
 viewBlogPosts posts =
-  Html.div [Attributes.class ""
-  ] [
-    ["Name", "Date Modified", "Size", "Kind"]
-    |> List.indexedMap (\i col ->
-      Html.button [Attributes.class "flex items-center flex-1 px-3 text-left"
-      ] [Html.text col 
-      , Html.span [Attributes.classList [("hidden", i /= 1)
-      , ("ml-auto", True)]] [Html.text "^"
-      ]]
-
-      )
-    
-    |> Html.div [Attributes.class "flex items-center my-4 text-sm divide-x"]
-    , posts
-        |> List.map viewBlogPost
-        |> Html.div []
+    Html.div
+        [ Attributes.class ""
+        ]
+        [ [ "Name", "Date Modified", "Size", "Kind" ]
+            |> List.indexedMap
+                (\i col ->
+                    Html.button
+                        [ Attributes.class "flex items-center flex-1 px-3 text-left"
+                        ]
+                        [ Html.text col
+                        , Html.span
+                            [ Attributes.classList
+                                [ ( "hidden", i /= 1 )
+                                , ( "ml-auto", True )
+                                ]
+                            ]
+                            [ Html.text "^"
+                            ]
+                        ]
+                )
+            |> Html.div [ Attributes.class "flex items-center my-4 text-sm divide-x" ]
+        , posts
+            |> List.map viewBlogPost
+            |> Html.div []
         ]
 
 
 viewBlogPost post =
-    Html.div [Attributes.class "flex items-center justify-between"]
-        [ Route.Blog__Slug_ { slug = String.replace ".md" "" post }
-            |> Route.link [Attributes.class "flex-1 px-3 "]
-                [ Html.text post
+    Html.div [ Attributes.class "flex items-center justify-between" ]
+        [ Route.Blog__Slug_ { slug = String.replace ".md" "" post.name }
+            |> Route.link [ Attributes.class "flex-1 px-3 " ]
+                [ Html.text post.name
                 ]
-        , Html.time [Attributes.class "flex-1 px-3 "] [Html.text "04/20/2023"]
-        , Html.span [Attributes.class "flex-1 px-3 "] [Html.text "420kb"]
-        , Html.span [Attributes.class "flex-1  px-3 "] [Html.text "Markdown Text"]
+        , Html.time [ Attributes.class "flex-1 px-3 " ] [ Html.text post.date ]
+        , Html.span [ Attributes.class "flex-1 px-3 " ] [ Html.text "420kb" ]
+        , Html.span [ Attributes.class "flex-1 px-3 " ] [ Html.text "Markdown Text" ]
         ]
 
 

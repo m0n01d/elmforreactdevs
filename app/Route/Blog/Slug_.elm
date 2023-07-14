@@ -2,6 +2,7 @@ module Route.Blog.Slug_ exposing (ActionData, Data, Model, Msg, route)
 
 import BackendTask exposing (BackendTask)
 import BackendTask.File
+import Data.BlogPost as BlogPost exposing (BlogPost)
 import FatalError exposing (FatalError)
 import Head
 import Head.Seo as Seo
@@ -50,14 +51,7 @@ pages =
 
 
 type alias Data =
-    { post : BlogPostMetadata
-    }
-
-
-type alias BlogPostMetadata =
-    { body : List Markdown.Block.Block
-    , title : String
-    , tags : List String
+    { post : BlogPost
     }
 
 
@@ -78,8 +72,9 @@ data routeParams =
 --blogPost : BackendTask FatalError BlogPostMetadata
 
 
+blogPost : String -> BackendTask { fatal : FatalError, recoverable : BackendTask.File.FileReadError Decode.Error } BlogPost
 blogPost =
-    BackendTask.File.bodyWithFrontmatter blogPostDecoder
+    BackendTask.File.bodyWithFrontmatter BlogPost.decoder
 
 
 head :
@@ -122,30 +117,3 @@ renderMd =
         Markdown.Renderer.render
             Markdown.Renderer.defaultHtmlRenderer
             blocks
-
-
-markdownToView : String -> Decoder (List Markdown.Block.Block)
-markdownToView markdownString =
-    markdownString
-        |> Markdown.Parser.parse
-        |> Result.mapError (\_ -> "Markdown error.")
-        |> Decode.fromResult
-
-
-blogPostDecoder =
-    \mdString ->
-        Decode.map2
-            (\title renderedMd ->
-                { body = renderedMd
-                , tags = []
-                , title = title
-                }
-            )
-            (Decode.field "title" Decode.string)
-            (mdString |> markdownToView)
-
-
-tagsDecoder : Decoder (List String)
-tagsDecoder =
-    Decode.map (String.split " ")
-        Decode.string

@@ -68,10 +68,6 @@ data routeParams =
         |> BackendTask.map Data
 
 
-
---blogPost : BackendTask FatalError BlogPostMetadata
-
-
 blogPost : String -> BackendTask { fatal : FatalError, recoverable : BackendTask.File.FileReadError Decode.Error } BlogPost
 blogPost =
     BackendTask.File.bodyWithFrontmatter BlogPost.decoder

@@ -20,11 +20,11 @@
 
 [view-name="Blog.view"] blockquote,
 [view-name="Blog.view"] pre {
-  @apply my-2 bg-neutral-50 drop-shadow-md monospace py-2 px-3;
+  @apply my-2 bg-neutral-50 shadow-md monospace py-2 px-3;
 }
 
 [view-name="Blog.view"] pre {
-  @apply overflow-x-scroll;
+  @apply overflow-x-scroll border border-t-neutral-50;
 }
 
 [view-name="Blog.view"] blockquote {
@@ -43,4 +43,8 @@
 [view-name="Blog.view"] p code,
 [view-name="Blog.view"] p pre {
   @apply filter-none drop-shadow-none;
+}
+
+[view-name="Blog.view"] em {
+  @apply monospace;
 }

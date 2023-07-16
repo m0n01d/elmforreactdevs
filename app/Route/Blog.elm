@@ -134,6 +134,7 @@ viewContent app =
         ]
 
 
+viewBlogPosts : List BlogPost -> Html.Html msg
 viewBlogPosts posts =
     Html.div
         [ Attributes.class ""
@@ -142,7 +143,10 @@ viewBlogPosts posts =
             |> List.indexedMap
                 (\i col ->
                     Html.button
-                        [ Attributes.class "flex items-center flex-1 px-3 text-left"
+                        [ Attributes.classList
+                            [ ( "text-slate-800 flex items-center flex-1 px-3 text-left", True )
+                            , ( "text-black font-semibold", i == 1 )
+                            ]
                         ]
                         [ Html.text col
                         , Html.span

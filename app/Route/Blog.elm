@@ -2,12 +2,15 @@ module Route.Blog exposing (ActionData, Data, Model, Msg, RouteParams, action, d
 
 import BackendTask exposing (BackendTask)
 import BackendTask.Custom
-import BackendTask.File
+import BackendTask.File as File
 import BackendTask.Http
-import Data.BlogPost as BlogPost exposing (BlogPost)
+import Data.BlogPost as BlogPost exposing (BlogPost, BlogPostMeta)
+import Date
+import Dict exposing (Dict)
 import Effect exposing (Effect)
 import ErrorPage exposing (ErrorPage)
 import FatalError exposing (FatalError)
+import Filesize
 import Head
 import Html
 import Html.Attributes as Attributes
@@ -64,7 +67,8 @@ subscriptions routeParams path shared model =
 
 
 type alias Data =
-    { posts : List BlogPost
+    { postsMeta : Dict String BlogPostMeta
+    , posts : List BlogPost
     }
 
 
@@ -72,31 +76,41 @@ type alias ActionData =
     {}
 
 
-data : BackendTask FatalError Data
-data =
-    (BackendTask.Custom.run "blogPosts"
+dataPostsMeta : BackendTask FatalError (Dict String BlogPostMeta)
+dataPostsMeta =
+    let
+        decodeHelp =
+            Decode.list
+                (Decode.map2 Tuple.pair
+                    (Decode.field "file" Decode.string)
+                    (Decode.field "stats" BlogPost.decodeBlogPostMeta)
+                )
+                |> Decode.map Dict.fromList
+    in
+    BackendTask.Custom.run "blogPostsMeta"
         Encode.null
-        (Decode.list Decode.string)
+        decodeHelp
         |> BackendTask.allowFatal
-    )
+
+
+dataPosts =
+    BlogPost.glob
         |> BackendTask.map
-            (\files ->
-                files
-                    |> List.filter (String.contains ".md")
+            (\blogPosts ->
+                blogPosts
                     |> List.map
-                        (\file ->
-                            [ "./posts/", file ]
-                                |> String.concat
-                                |> BackendTask.File.bodyWithFrontmatter BlogPost.decoder
-                                |> BackendTask.allowFatal
+                        (\{ filePath, slug } ->
+                            File.bodyWithFrontmatter BlogPost.decoder filePath
                         )
             )
-        |> BackendTask.andThen BackendTask.combine
-        |> BackendTask.map Data
+        |> BackendTask.resolve
+        |> BackendTask.allowFatal
 
 
-x =
-    Decode.list (Decode.string |> Decode.andThen BlogPost.decoder)
+data =
+    BackendTask.map2 Data
+        dataPostsMeta
+        dataPosts
 
 
 head : App Data ActionData RouteParams -> List Head.Tag
@@ -130,12 +144,12 @@ viewContent app =
             ]
             [ Html.text "Posts"
             ]
-        , viewBlogPosts app.data.posts
+        , viewBlogPosts app.data
         ]
 
 
-viewBlogPosts : List BlogPost -> Html.Html msg
-viewBlogPosts posts =
+viewBlogPosts : Data -> Html.Html msg
+viewBlogPosts { posts, postsMeta } =
     Html.div
         [ Attributes.class ""
         ]
@@ -161,21 +175,36 @@ viewBlogPosts posts =
                 )
             |> Html.div [ Attributes.class "flex items-center my-4 text-sm divide-x" ]
         , posts
-            |> List.map viewBlogPost
+            |> List.map (viewBlogPost postsMeta)
             |> Html.div []
         ]
 
 
-viewBlogPost post =
-    Html.div [ Attributes.class "flex items-center justify-between" ]
-        [ Route.Blog__Slug_ { slug = String.replace ".md" "" post.name }
+viewBlogPost postsMeta post =
+    let
+        viewMeta_ =
+            \meta ->
+                [ Html.time [ Attributes.class "flex-1 px-3 " ] [ Html.text <| Date.format "YYYY-dd-MM" meta.modifiedDate ]
+                , Html.span [ Attributes.class "flex-1 px-3 " ] [ Html.text <| Filesize.format meta.size ]
+                , Html.span [ Attributes.class "flex-1 px-3 " ] [ Html.text "Markdown Text" ]
+                ]
+
+        viewMeta =
+            postsMeta
+                |> Dict.get post.name
+                |> Maybe.map viewMeta_
+                |> Maybe.withDefault []
+    in
+    [ [ Route.Blog__Slug_ { slug = String.replace ".md" "" post.name }
             |> Route.link [ Attributes.class "flex-1 px-3 " ]
                 [ Html.text post.name
                 ]
-        , Html.time [ Attributes.class "flex-1 px-3 " ] [ Html.text post.date ]
-        , Html.span [ Attributes.class "flex-1 px-3 " ] [ Html.text "420kb" ]
-        , Html.span [ Attributes.class "flex-1 px-3 " ] [ Html.text "Markdown Text" ]
-        ]
+      ]
+    , viewMeta
+    ]
+        |> List.concat
+        |> Html.div
+            [ Attributes.class "flex items-center justify-between" ]
 
 
 action :

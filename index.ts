@@ -1,4 +1,16 @@
 import { inject } from "@vercel/analytics";
+
+import Prism from "prismjs";
+import "prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.js";
+import "prismjs/components/prism-elm";
+
+Prism.plugins.NormalizeWhitespace.setDefaults({
+  "remove-trailing": true,
+  "remove-indent": true,
+  "left-trim": true,
+  "right-trim": true,
+  "break-lines": 110,
+});
 type ElmPagesInit = {
   load: (elmLoaded: Promise<unknown>) => Promise<void>;
   flags: unknown;

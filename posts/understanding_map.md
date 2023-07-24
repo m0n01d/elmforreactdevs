@@ -74,7 +74,7 @@ The starter example in the official react docs, Thinking in React 2023, has a co
 I see this pattern a lot.
 Initialize an empty array, loop over another array, pushing items from it into the empty one.
 
-```
+```javascript
 function ProductTable({ products, filterText, inStockOnly }) {
   const rows = [];
   let lastCategory = null;
@@ -132,9 +132,9 @@ No `undefined`.
 
 So how do we safely update our data?
 
-```
+```javascript
 [ "help im in a box" ].map(str => str.concat("!"))
-outputs:[ 'help im in a box!' ]
+-- outputs:[ 'help im in a box!' ]
 ```
 I really like the “box metaphor” I learned from Professor Frisby.
 
@@ -174,7 +174,7 @@ Maybe the most common example is the `Maybe a` type.
 [Maybe Source](https://github.com/elm/core/blob/1.0.5/src/Maybe.elm)
 
 
-```
+```elm
 type Maybe a = Just a | Nothing
 ```
 
@@ -185,7 +185,7 @@ We either have it or we don’t.
 
 Say we have our box
 
-```
+```elm
 
 x: Maybe String
 x = Maybe.map (\str -> String.append str "!") (Just "Help im in a box called a Maybe") 
@@ -212,7 +212,7 @@ The idea is to “open” this box. Or a container, or a context, whatever you w
 
 Open this box safely with `map` then and run a function on its contents `a -> b` and then put it in that box.
 
-```
+```elm
 map : (a -> b) -> Maybe a -> Maybe b
 map fromAtoB maybeA =
   case maybeA of 
@@ -257,10 +257,15 @@ So the more you can generalize your thinking, and simplify your understanding, t
 
 And then theres `Result.map` and take it and run with it
 Generalize and think of them as boxes
-https://package.elm-lang.org/packages/elm/core/latest/Task#map
-https://package.elm-lang.org/packages/elm/core/latest/Result#map
-https://package.elm-lang.org/packages/elm/core/latest/Dict#map
-https://package.elm-lang.org/packages/elm/core/latest/String#map
+
+[https://package.elm-lang.org/packages/elm/core/latest/Task#map](https://package.elm-lang.org/packages/elm/core/latest/Task#map)
+
+[https://package.elm-lang.org/packages/elm/core/latest/Result#map](https://package.elm-lang.org/packages/elm/core/latest/Result#map)
+
+[https://package.elm-lang.org/packages/elm/core/latest/Dict#map](https://package.elm-lang.org/packages/elm/core/latest/Dict#map)
+
+[https://package.elm-lang.org/packages/elm/core/latest/String#map](https://package.elm-lang.org/packages/elm/core/latest/String#map)
+
 And more
 
 

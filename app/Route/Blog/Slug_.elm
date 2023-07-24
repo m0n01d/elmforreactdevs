@@ -8,9 +8,11 @@ import Head
 import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attributes
+import Html.Attributes.Extra as Attributes
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Extra as Decode
 import Markdown.Block
+import Markdown.Html
 import Markdown.Parser
 import Markdown.Renderer
 import Pages.Url
@@ -102,7 +104,7 @@ view app sharedModel =
     , body =
         renderMd app.data.post.body
             |> Result.withDefault [ Html.text "bad" ]
-            |> Html.div [ Attributes.attribute "view-name" "Blog.view" ]
+            |> Html.node "ui-prism" [ Attributes.attribute "view-name" "Blog.view" ]
             |> List.singleton
     }
 

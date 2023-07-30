@@ -49,6 +49,7 @@ pages : BackendTask FatalError (List RouteParams)
 pages =
     BackendTask.succeed
         [ { slug = "understanding_map" }
+        , { slug = "pillar_01_basic_syntax" }
         ]
 
 

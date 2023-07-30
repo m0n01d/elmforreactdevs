@@ -13,6 +13,9 @@
 [view-name="Blog.view"] h1 {
   @apply text-2xl font-bold fancy-text;
 }
+[view-name="Blog.view"] h5 {
+  @apply font-bold fancy-text;
+}
 
 [view-name="Blog.view"] blockquote {
   @apply my-2 shadow-md monospace py-2 px-3;
@@ -38,4 +41,8 @@
 
 [view-name="Blog.view"] em {
   @apply monospace;
+}
+
+[view-name="Blog.view"] hr {
+  @apply my-8;
 }

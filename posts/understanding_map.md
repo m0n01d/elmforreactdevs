@@ -1,5 +1,5 @@
 ---
-date: 07/11/2023
+date: "2023-07-11"
 layout: post
 name : understanding_map.md
 title: Understanding [].map() Array.prototype.map in JavaScript

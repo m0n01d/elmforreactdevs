@@ -184,7 +184,7 @@ viewBlogPost postsMeta post =
     let
         viewMeta_ =
             \meta ->
-                [ Html.time [ Attributes.class "flex-1 px-3 " ] [ Html.text <| Date.format "YYYY-dd-MM" meta.modifiedDate ]
+                [ Html.time [ Attributes.class "flex-1 px-3 " ] [ Html.text <| Date.format "MM-dd-YY" post.date ]
                 , Html.span [ Attributes.class "flex-1 px-3 " ] [ Html.text <| Filesize.format meta.size ]
                 , Html.span [ Attributes.class "flex-1 px-3 " ] [ Html.text "Markdown Text" ]
                 ]

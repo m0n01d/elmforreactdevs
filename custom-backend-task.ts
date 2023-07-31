@@ -8,13 +8,18 @@ export async function hello(name) {
 export async function blogPostsMeta() {
   const dir = path.join("posts");
   const files = await readdir(dir);
-  const metadata = await Promise.all( files.map((file) => {
-    return  stat(path.join("posts", file))
-    .then((fileStats) =>  ({stats: {xmtime: new Date(fileStats.mtime).toISOString(), ...fileStats}, file}))
-  })
-                          )
+  const metadata = await Promise.all(
+    files.map((file) => {
+      return stat(path.join("posts", file)).then((fileStats) => ({
+        stats: {
+          ...fileStats,
+        },
+        file,
+      }));
+    })
+  );
 
-  console.log(metadata)
+  console.log(metadata);
 
   return metadata;
 }

@@ -14,6 +14,7 @@ import Time
 
 type alias BlogPost =
     { body : List Markdown.Block.Block
+    , date : Date
     , name : String
     , tags : List String
     , title : String
@@ -23,9 +24,10 @@ type alias BlogPost =
 decoder : String -> Decoder BlogPost
 decoder =
     \mdString ->
-        Decode.map3
-            (\name title body ->
+        Decode.map4
+            (\name title date body ->
                 { body = body
+                , date = date
                 , name = name
                 , tags = []
                 , title = title
@@ -33,6 +35,7 @@ decoder =
             )
             (Decode.field "name" Decode.string)
             (Decode.field "title" Decode.string)
+            (Decode.field "date" decodeDate )
             (mdString |> decodeBody)
 
 
@@ -51,10 +54,15 @@ decodeTags =
 
 
 type alias BlogPostMeta =
-    { modifiedDate : Date
-    , size : Int
+    {size : Int
     }
 
+decodeDate_ =
+  Decode.string 
+  |> Decode.andThen (\str ->
+      Date.fromIsoString str
+      |> Decode.fromResult
+    )
 
 decodeDate =
     Iso8601.decoder
@@ -65,8 +73,7 @@ decodeDate =
 
 
 decodeBlogPostMeta =
-    Decode.map2 BlogPostMeta
-        (Decode.field "xmtime" decodeDate)
+    Decode.map BlogPostMeta
         (Decode.field "size" Decode.int)
 
 

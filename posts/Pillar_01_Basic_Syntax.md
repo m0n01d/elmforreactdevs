@@ -1,5 +1,5 @@
 ---
-date: 07/30/2023
+date: "2023-07-30"
 layout: post
 name : Pillar_01_Basic_Syntax.md
 title: Pillar 1 Basic Syntax

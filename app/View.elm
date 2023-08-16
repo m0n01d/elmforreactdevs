@@ -11,8 +11,8 @@ import Route
 
 -}
 type alias View msg =
-    { title : String
-    , body : List (Html msg)
+    { body : List (Html msg)
+    , title : String
     }
 
 

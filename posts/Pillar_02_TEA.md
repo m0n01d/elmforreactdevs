@@ -258,6 +258,10 @@ Going back to the top level `update`, it returns a tuple of `(Model, Cmd Msg)`
 
 So when we want to scale and grow our app, we can use The Elm Architecture to “nest” modules.
 
+Each nested Page mimics that same pattern of function exports and their type signatures match.
+
+We just need a wrapper for them at the appropriate level.
+
 Our top level `Msg` type wraps nested submodules’ `Msg`s 
 And our top level Model will wrap nested `Model`s
 

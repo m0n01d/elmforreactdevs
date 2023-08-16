@@ -249,7 +249,10 @@ And each page will also have 3 key parts:
 * example : [elm-spa-example/src/Page/Profile.elm at master · rtfeldman/elm-spa-example](https://github.com/rtfeldman/elm-spa-example/blob/master/src/Page/Profile.elm#L33)
 
 
-  But why?
+
+
+
+> But why?
 
 Going back to the top level `update`, it returns a tuple of `(Model, Cmd Msg)`
 

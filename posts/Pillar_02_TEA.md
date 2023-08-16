@@ -263,8 +263,9 @@ Each nested Page mimics that same pattern of function exports and their type sig
 We just need a wrapper for them at the appropriate level.
 
 Our top level `Msg` type wraps nested submodules’ `Msg`s 
-And our top level Model will wrap nested `Model`s
 
-It’s turtles all the way down.
+And our top level Model will wrap nested `Page Model`s
+
+> It’s turtles all the way down.
 
 Wrapping in this way is robust and reliable. It’s easier to reason about when a module at 1 level looks and acts just like a module 1 or 2 levels deeper. The consistency is a huge win for productivity.

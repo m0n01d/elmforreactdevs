@@ -45,6 +45,7 @@ import Svg.Attributes as SvgAttributes
 import Svg.Events as SvgEvents
 import SweptAngle
 import UrlPath
+import Vector2d exposing (Vector2d)
 import View
 
 
@@ -60,11 +61,12 @@ type Swing
     = NotTouching
     | StartedSwing { start : Point }
     | Drawing { start : Point, end : Point }
+    | InFlight
 
 
 type alias Model =
     { randomPoints : List ( Point, Point )
-    , touch : Swing
+    , swing : Swing
     , ball : Ball
     }
 
@@ -108,7 +110,7 @@ init :
 init app shared =
     ( { randomPoints = []
       , ball = { point = ballStartPoint }
-      , touch = NotTouching
+      , swing = NotTouching
       }
     , Effect.fromCmd <|
         Random.generate GotPoints ysGen
@@ -151,18 +153,18 @@ update app shared msg model =
 
         StartedClick start ->
             ( { model
-                | touch = StartedSwing { start = start }
+                | swing = StartedSwing { start = start }
               }
             , Effect.none
             )
 
         TouchDragged start end ->
-            ( { model | touch = Drawing { start = start, end = end } }
+            ( { model | swing = Drawing { start = start, end = end } }
             , Effect.none
             )
 
         Swung ->
-            ( { model | touch = NotTouching }
+            ( { model | swing = NotTouching }
             , Effect.none
             )
 
@@ -186,7 +188,7 @@ toPoints xs ys =
 subscriptions : RouteParams -> UrlPath.UrlPath -> Shared.Model -> Model -> Sub Msg
 subscriptions routeParams path shared model =
     [ [ BrowserEvents.onMouseUp (Decode.succeed Swung) ]
-    , case model.touch of
+    , case model.swing of
         NotTouching ->
             []
 
@@ -197,6 +199,9 @@ subscriptions routeParams path shared model =
         Drawing { start } ->
             [ BrowserEvents.onMouseMove (Decode.map (TouchDragged start) decodeStart)
             ]
+
+        InFlight ->
+            []
     ]
         |> List.concat
         |> Sub.batch
@@ -284,7 +289,7 @@ decodeStart =
         |> Decode.map (Point2d.fromTuple Length.meters)
 
 
-viewScene { touch, randomPoints } =
+viewScene { ball, swing, randomPoints } =
     Svg.svg
         [ SvgAttributes.viewBox <|
             String.concat
@@ -303,10 +308,9 @@ viewScene { touch, randomPoints } =
         [ Geometry.relativeTo topLeftFrame <|
             Svg.svg []
                 [ viewBall ballStartPoint
-                , viewTop
-                , viewTrajectory
+                , viewTrajectory ball swing
                 , viewGround randomPoints
-                , viewSwing touch
+                , viewSwing swing
                 ]
         ]
 
@@ -330,29 +334,69 @@ viewSwing touch =
                     (LineSegment2d.from start end)
                 ]
 
+        InFlight ->
+            Svg.g [] []
 
-viewTrajectory : Svg.Svg msg
-viewTrajectory =
-    let
-        { x, y, theta } =
-            foo 40 45
-    in
-    Svg.path
-        [ SvgAttributes.d <|
-            String.concat
-                [ "M 0 0 C 0 0, "
-                , String.fromFloat (x / 2)
-                , " "
-                , String.fromFloat (y * 2)
-                , " "
-                , String.fromFloat x
-                , " 0"
+
+viewTrajectory : Ball -> Swing -> Svg.Svg msg
+viewTrajectory ball swing =
+    case swing of
+        Drawing { start, end } ->
+            let
+                swingVector =
+                    Vector2d.from start end
+                        |> Vector2d.half
+
+                ball_ =
+                    Point2d.unwrap ball.point
+
+                vector =
+                    Vector2d.meters ball_.x ball_.y
+                        |> Vector2d.plus swingVector
+
+                start_ =
+                    Point2d.unwrap start
+
+                end_ =
+                    Point2d.unwrap end
+
+                firstAngle =
+                    Basics.atan2 start_.y start_.x
+
+                secondAngle =
+                    Basics.atan2 0 0
+
+                angleRadians =
+                    Debug.log "radians" <|
+                        Basics.atan2 (start_.y - end_.y) (start_.x - end_.x)
+
+                angle =
+                    angleRadians
+                        |> (\n -> n * 180 / Basics.pi)
+                        |> Debug.log "angle"
+
+                { x, y, theta } =
+                    calculateTrajectory vector angle
+            in
+            Svg.path
+                [ SvgAttributes.d <|
+                    String.concat
+                        [ "M 0 0 C 0 0, "
+                        , String.fromFloat (x / 2)
+                        , " "
+                        , String.fromFloat (y * 2)
+                        , " "
+                        , String.fromFloat x
+                        , " 0"
+                        ]
+                , SvgAttributes.fill "none"
+                , SvgAttributes.strokeWidth "1"
+                , SvgAttributes.stroke "red"
                 ]
-        , SvgAttributes.fill "none"
-        , SvgAttributes.strokeWidth "1"
-        , SvgAttributes.stroke "red"
-        ]
-        []
+                []
+
+        _ ->
+            Svg.g [] []
 
 
 startPoint : Point2d Meters Coordinates
@@ -375,15 +419,6 @@ viewBall point =
     Geometry.circle2d
         [ SvgAttributes.fill "white", SvgAttributes.stroke "black", SvgAttributes.strokeWidth "2" ]
         (Circle2d.withRadius (Length.meters 5) point)
-
-
-viewTop : Svg.Svg msg
-viewTop =
-    let
-        { x, y, theta } =
-            foo 40 45
-    in
-    viewBall (Point2d.meters (x / 2) y)
 
 
 viewGround : List ( Point, Point ) -> Html.Html msg
@@ -462,11 +497,16 @@ range u angle =
     ux * t
 
 
-foo u angle =
+calculateTrajectory : Vector2d Meters Coordinates -> Float -> { x : Float, y : Float, theta : Float }
+calculateTrajectory vector angle =
     let
+        u : Float
+        u =
+            Vector2d.length vector
+                |> Length.inMeters
+
         time_ =
             time u angle_
-                |> Debug.log "time"
 
         angle_ =
             angle * Basics.pi / 180
@@ -475,11 +515,9 @@ foo u angle =
             u
                 * Basics.cos angle_
                 * time_
-                |> Debug.log "x"
 
         y =
-            (u * Basics.sin angle_ * time_ - (g * time_ * time_) / 2.0)
-                |> Debug.log "y"
+            u * Basics.sin angle_ * time_ - (g * time_ * time_) / 2.0
 
         t =
             time_ / 2
@@ -490,19 +528,16 @@ foo u angle =
                 * t
                 - (g * t * t)
                 / 2.0
-                |> Debug.log "y_"
 
         vx =
             u
                 * Basics.cos angle_
-                |> Debug.log "vx"
 
         vy =
             u
                 * Basics.sin angle_
                 - g
                 * time_
-                |> Debug.log "vy"
 
         v =
             Basics.sqrt (vx * vx + vy * vy)

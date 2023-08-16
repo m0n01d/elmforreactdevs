@@ -62,12 +62,34 @@ Lists are foundational data structures in Elm programs.
 You’ll even use Lists of Lists!
 
 
+One thing i like to do when working with new UIs is to generate lists of static views for mocking out layouts without waiting for Backend Engineers to finalize their api and send me data.
+
+```elm
+
+viewSingleItem : () -> Html msg
+viewSingleItem _ = Html.li [] [ Html.text "Single item view" ]
+
+viewMany : Html msg
+viewMany = 
+    List.repeat 10 
+    |> List.map viewSingleItem
+    |> Html.ul []
+```
+I often found myself finding edge cases in designs when plugging in 0, 1, 2 and Many mock views.
+
+Designers often skip over these variants, but its easy to mock them with List functions!
+
+
+
+Elm's great about unblocking yourself and moving forward.
+
+
 ---
 ##### Using Pipelines
 
 Here are some helpful tips for pipelines.
 
-Some common anti-patterns were multiple calls to `map`
+One common anti-pattern I saw often was multiple calls to `map`
 
 ```elm
 listOfPosts

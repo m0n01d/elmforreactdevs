@@ -19,11 +19,9 @@ export default customElements.define(
 
     connectedCallback() {
       const snippets = [...this.querySelectorAll("pre")];
-      console.log("init", snippets);
       snippets.forEach((snippet) => {
         const $el = snippet.querySelector("code");
         const txt = $el.innerText;
-        console.log("prism", $el);
         Prism.highlightElement($el);
       });
     }

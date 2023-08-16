@@ -27,15 +27,15 @@ decoder =
         Decode.map4
             (\name title date body ->
                 { body = body
-                , date = date
                 , name = name
                 , tags = []
+                , date = date
                 , title = title
                 }
             )
             (Decode.field "name" Decode.string)
             (Decode.field "title" Decode.string)
-            (Decode.field "date" decodeDate )
+            (Decode.field "date" decodeDate)
             (mdString |> decodeBody)
 
 
@@ -54,15 +54,18 @@ decodeTags =
 
 
 type alias BlogPostMeta =
-    {size : Int
+    { size : Int
     }
 
+
 decodeDate_ =
-  Decode.string 
-  |> Decode.andThen (\str ->
-      Date.fromIsoString str
-      |> Decode.fromResult
-    )
+    Decode.string
+        |> Decode.andThen
+            (\str ->
+                Date.fromIsoString str
+                    |> Decode.fromResult
+            )
+
 
 decodeDate =
     Iso8601.decoder

@@ -126,7 +126,19 @@ view app shared =
         , Html.section
             [ Attributes.class "my-8 leading-7"
             ]
-            [ Html.p []
+            [ Html.p
+                [ Attributes.class "text-lg fancy-text"
+                ]
+                [ Html.span
+                    [ Attributes.class "mr-px"
+                    ]
+                    [ Html.text "I'm offering 1:1 coaching and mentoring sessions through "
+                    ]
+                , viewPatreonLink <| Just "Patreon"
+                ]
+            , Html.p
+                [ Attributes.class "my-4"
+                ]
                 [ Html.text "Starting in 2017, I experienced first hand the journey of switching from React development to "
                 , Html.span
                     [ Attributes.class "monospace"
@@ -144,7 +156,12 @@ view app shared =
             ]
             [ Html.div []
                 [ Html.p []
-                    [ Html.text "Most recently i was challenged with hiring Elm engineers to help rewrite a React app in Elm."
+                    [ Html.text "Most recently I was challenged with hiring Elm engineers to help rewrite a React app in Elm."
+                    ]
+                , Html.p
+                    [ Attributes.class "my-2"
+                    ]
+                    [ Html.text "Finding Elm developers was tough!"
                     ]
                 , Html.p
                     [ Attributes.class "my-2"

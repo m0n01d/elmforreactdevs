@@ -46,3 +46,8 @@
 [view-name="Blog.view"] hr {
   @apply my-8;
 }
+
+[view-name="Blog.view"] ul {
+  list-style: square;
+  @apply ml-6;
+}

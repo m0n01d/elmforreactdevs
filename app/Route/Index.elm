@@ -97,7 +97,7 @@ view app shared =
                         ]
                         [ Html.text "Are you a React.js developer looking to expand your skills and harness the power of Elm?" ]
                     , Html.p
-                        [ Attributes.class "text-lg font-bold md:text-2xl fancy-text"
+                        [ Attributes.class "text-lg font-semibold md:text-2xl fancy-text"
                         ]
                         [ Html.text "Look no further than "
                         , viewPatreonLink (Just "ElmForReactDevs")

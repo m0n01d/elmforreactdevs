@@ -291,6 +291,9 @@ take n list =
             (x::xs) -> x :: take (n-1) xs
 ```
 
+
+checkout Evan's [book](https://functional-programming-in-elm.netlify.app/recursion/binary-trees.html)
+
 ---
 
 ##### Type signatures
@@ -344,6 +347,7 @@ Understanding partial application, and Elm’s automatic currying might help mak
 Once you know how to read type signatures, reading docs on the package site becomes easier.
 Searching for the right function by its type signature will save you time.
 
+[You can even serach by type signature ](https://klaftertief.github.io/elm-search/?q=Int%20-%3E%20List%20a%20-%3E%20List%20a)
 
 
 

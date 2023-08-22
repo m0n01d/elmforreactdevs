@@ -3,7 +3,7 @@
 }
 @media screen(md) {
   [view-name="Blog.view"] {
-    @apply w-1/2;
+    @apply w-1/2 flex flex-col;
   }
 }
 

@@ -6,6 +6,10 @@ title: Pillar 1 Basic Syntax
 ---
 # Pillar 1 - Basic Syntax
 
+
+
+[![Watch it on YouTube](/imgs/pillar01.png)](https://youtu.be/hTIIYg7YQ3k)
+
 When I was getting started with elm, I worked with people who were familiar with Haskell. And I had just started when Elm v0.18 was still a thing. So I was kind of diving headfirst into a deep well of confusing operators and strange syntax coming from a JavaScript background.
 
 I had to get used to reading point-free style Elm code and heavy use of composition.

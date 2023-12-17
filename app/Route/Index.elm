@@ -109,7 +109,7 @@ view app shared =
                     ]
                     [ Html.iframe
                         [ Attributes.class "w-full aspect-video"
-                        , Attributes.src "https://www.youtube.com/embed/3GBZVR7TFU4"
+                        , Attributes.src "https://www.youtube.com/embed/qWHERlLcU94"
                         , Attributes.title "ElmForReactDevs YouTube"
                         , Attributes.attribute "frameborder" "0"
                         , Attributes.attribute "allow" "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -119,7 +119,7 @@ view app shared =
                     , Html.caption
                         [ Attributes.class "block mt-2 text-center"
                         ]
-                        [ Html.text "Hello World!" ]
+                        [ Html.text "Let's build a Chrome Extension!" ]
                     ]
                 ]
             ]
@@ -167,6 +167,11 @@ view app shared =
                     [ Attributes.class "my-2"
                     ]
                     [ Html.text "I want to help more React developers better understand elm and static typed purely functional languages."
+                    ]
+                , Html.p
+                    [ Attributes.class "my-2"
+                    ]
+                    [ Html.text "Along the way we'll use ReScript and Elm to learn and understand functional topics."
                     ]
                 , Html.p []
                     [ Html.text "I saw "

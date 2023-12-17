@@ -166,7 +166,7 @@ viewBlogPosts { posts, postsMeta } =
                         , Html.span
                             [ Attributes.classList
                                 [ ( "hidden", i /= 1 )
-                                , ( "ml-auto", True )
+                                , ( "ml-auto transform rotate-180", True )
                                 ]
                             ]
                             [ Html.text "^"
@@ -175,6 +175,7 @@ viewBlogPosts { posts, postsMeta } =
                 )
             |> Html.div [ Attributes.class "flex items-center my-4 text-sm divide-x" ]
         , posts
+        |> List.sortWith (\a b -> Date.compare b.date a.date)
             |> List.map (viewBlogPost postsMeta)
             |> Html.div []
         ]

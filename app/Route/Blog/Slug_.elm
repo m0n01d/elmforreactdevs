@@ -51,6 +51,7 @@ pages =
         [ { slug = "understanding_map" }
         , { slug = "Pillar_01_Basic_Syntax" }
         , { slug = "Pillar_02_TEA" }
+        , {slug = "YouTube_Studio_Widgets"}
         ]
 
 
